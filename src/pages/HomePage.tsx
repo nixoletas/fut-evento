@@ -1,9 +1,8 @@
-
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import Header from "@/components/Header";
-import { Calendar, ClipboardList, Share, UserPlus, Users } from "lucide-react";
+import { Calendar, ClipboardList, MapPin, Share, UserPlus, Users } from "lucide-react";
 
 const HomePage: React.FC = () => {
   const navigate = useNavigate();
