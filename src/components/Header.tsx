@@ -52,6 +52,7 @@ const Header: React.FC = () => {
       {user ? (
         <div className="flex items-center gap-2">
           <div className="hidden sm:flex items-center gap-2">
+            <span className="text-sm text-fut-600">Olá, {user.name}</span>
             <Button variant="ghost" size="sm" asChild>
               <Link to="/dashboard">Meus Eventos</Link>
             </Button>
@@ -79,6 +80,7 @@ const Header: React.FC = () => {
                   <SheetTitle className="text-left">Menu</SheetTitle>
                 </SheetHeader>
                 <div className="flex flex-col gap-3 mt-6">
+                  <span className="text-sm text-fut-600">Olá, {user.name}</span>
                   <Button
                     variant="ghost"
                     size="sm"
