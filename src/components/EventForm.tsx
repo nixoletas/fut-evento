@@ -49,7 +49,7 @@ const EventForm: React.FC = () => {
         title,
         date: combinedDateTime,
         location,
-        maxPlayers,
+        max_players: maxPlayers,
         description
       });
       

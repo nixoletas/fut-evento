@@ -9,7 +9,8 @@ export interface Player {
   id: string;
   name: string;
   position: number;
-  addedAt: Date;
+  added_at: Date;
+  event_id: string;
 }
 
 export interface FootballEvent {
@@ -17,9 +18,9 @@ export interface FootballEvent {
   title: string;
   date: Date;
   location: string;
-  maxPlayers: number;
+  max_players: number;
   description?: string;
-  createdBy: string;
-  createdAt: Date;
-  players: Player[];
+  created_by: string;
+  created_at: Date;
+  players?: Player[];
 }

@@ -20,7 +20,7 @@ const PlayersList: React.FC<PlayersListProps> = ({ event, isCreator = false }) =
   const [copied, setCopied] = React.useState(false);
 
   // Sort players by position
-  const sortedPlayers = [...event.players].sort((a, b) => a.position - b.position);
+  const sortedPlayers = [...(event.players || [])].sort((a, b) => a.position - b.position);
 
   const handleCopyList = () => {
     const list = sortedPlayers
@@ -64,7 +64,7 @@ const PlayersList: React.FC<PlayersListProps> = ({ event, isCreator = false }) =
     <Card className="w-full glass-card animate-fade-in">
       <CardHeader className="flex flex-row items-center justify-between pb-2">
         <CardTitle className="text-xl text-fut-800">
-          Jogadores ({sortedPlayers.length}/{event.maxPlayers})
+          Jogadores ({sortedPlayers.length}/{event.max_players})
         </CardTitle>
         {isCreator && (
           <Button 
