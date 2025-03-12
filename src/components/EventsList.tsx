@@ -72,13 +72,13 @@ const EventsList: React.FC<EventsListProps> = ({
                 {event.title}
               </CardTitle>
               {isTomorrow(event.date) && (
-                <div className="flex items-center gap-2 p-2 mb-2 bg-yellow-100 text-yellow-700 text-sm rounded-md">
+                <div className="flex items-center gap-2 bg-yellow-100 px-2 text-yellow-700 text-sm rounded-md">
                   <AlertTriangle className="h-4 w-4 flex-shrink-0" />
                   <span>amanhã!</span>
                 </div>
               )}
               {isToday(event.date) && (
-                <div className="flex items-center gap-2 p-2 mb-2 bg-green-400 animate-pulse text-black text-sm rounded-md">
+                <div className="flex items-center gap-2 px-2 bg-green-400 animate-pulse text-black text-sm rounded-md">
                   <span>hoje! ⚽</span>
                 </div>
               )}
