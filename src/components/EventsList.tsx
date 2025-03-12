@@ -67,21 +67,22 @@ const EventsList: React.FC<EventsListProps> = ({
           className="overflow-hidden transition-all duration-300 hover:shadow-md hover:-translate-y-1 bg-white"
         >
           <CardHeader className="pb-2">
-            <CardTitle className="text-xl font-semibold text-fut-800">
-              {event.title}
-            </CardTitle>
-            {isTomorrow(event.date) && (
-              <div className="flex items-center gap-2 p-2 mb-2 bg-yellow-100 text-yellow-700 text-sm rounded-md">
-                <AlertTriangle className="h-4 w-4 flex-shrink-0" />
-                <span>Este evento acontece amanhã!</span>
-              </div>
-            )}
-            {isToday(event.date) && (
-              <div className="flex items-center gap-2 p-2 mb-2 bg-green-400 animate-pulse text-black text-sm rounded-md">
-                <p>⚽</p>
-                <span>A bola vai rolar hoje!</span>
-              </div>
-            )}
+            <div className="flex flex-row justify-between">
+              <CardTitle className="text-xl font-semibold text-fut-800">
+                {event.title}
+              </CardTitle>
+              {isTomorrow(event.date) && (
+                <div className="flex items-center gap-2 p-2 mb-2 bg-yellow-100 text-yellow-700 text-sm rounded-md">
+                  <AlertTriangle className="h-4 w-4 flex-shrink-0" />
+                  <span>amanhã!</span>
+                </div>
+              )}
+              {isToday(event.date) && (
+                <div className="flex items-center gap-2 p-2 mb-2 bg-green-400 animate-pulse text-black text-sm rounded-md">
+                  <span>hoje! ⚽</span>
+                </div>
+              )}
+            </div>
             <CardDescription className="flex items-center gap-1 text-muted-foreground">
               <Calendar className="h-4 w-4" />
               <span>{formatDate(event.date)}</span>
