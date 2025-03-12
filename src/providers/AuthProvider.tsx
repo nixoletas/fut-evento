@@ -115,8 +115,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
       }
 
       toast({
-        title: "Registro bem-sucedido!",
-        description: "Sua conta foi criada. Você já pode fazer login.",
+        title: "Confirme seu email!",
+        description: "Acesse sua caixa de entrada para efetuar seu cadastro.",
       });
     } catch (error: any) {
       toast({

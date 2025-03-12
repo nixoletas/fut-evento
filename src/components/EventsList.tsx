@@ -9,7 +9,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Calendar, MapPin, Users } from "lucide-react";
+import { AlertTriangle, Calendar, MapPin, Users } from "lucide-react";
 import { FootballEvent } from "@/types";
 import { formatDate, formatTime } from "@/lib/utils";
 
@@ -17,6 +17,32 @@ interface EventsListProps {
   events: FootballEvent[];
   emptyMessage?: string;
 }
+
+const isTomorrow = (eventDate: Date) => {
+  const eventDay = new Date(eventDate);
+  console.log(eventDay);
+  const today = new Date();
+
+  // Definir horários para garantir que estamos comparando apenas o dia
+  today.setHours(0, 0, 0, 0);
+  eventDay.setHours(0, 0, 0, 0);
+
+  const diff = Math.ceil(
+    (eventDay.getTime() - today.getTime()) / (1000 * 60 * 60 * 24)
+  );
+  return diff === 1;
+};
+
+const isToday = (eventDate: Date) => {
+  const eventDay = new Date(eventDate);
+  const today = new Date();
+
+  // Definir horários para garantir que estamos comparando apenas o dia
+  today.setHours(0, 0, 0, 0);
+  eventDay.setHours(0, 0, 0, 0);
+
+  return eventDay.getTime() === today.getTime();
+};
 
 const EventsList: React.FC<EventsListProps> = ({
   events,
@@ -44,6 +70,18 @@ const EventsList: React.FC<EventsListProps> = ({
             <CardTitle className="text-xl font-semibold text-fut-800">
               {event.title}
             </CardTitle>
+            {isTomorrow(event.date) && (
+              <div className="flex items-center gap-2 p-2 mb-2 bg-yellow-100 text-yellow-700 text-sm rounded-md">
+                <AlertTriangle className="h-4 w-4 flex-shrink-0" />
+                <span>Este evento acontece amanhã!</span>
+              </div>
+            )}
+            {isToday(event.date) && (
+              <div className="flex items-center gap-2 p-2 mb-2 bg-green-400 animate-pulse text-black text-sm rounded-md">
+                <p>⚽</p>
+                <span>A bola vai rolar hoje!</span>
+              </div>
+            )}
             <CardDescription className="flex items-center gap-1 text-muted-foreground">
               <Calendar className="h-4 w-4" />
               <span>{formatDate(event.date)}</span>
