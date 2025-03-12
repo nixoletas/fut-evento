@@ -1,7 +1,9 @@
-import React from "react";
+
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import Header from "@/components/Header";
+import { useAuth } from "@/providers/AuthProvider";
 import {
   Calendar,
   ClipboardList,
@@ -13,6 +15,28 @@ import {
 
 const HomePage: React.FC = () => {
   const navigate = useNavigate();
+  const { user, loading } = useAuth();
+  
+  // Redirect if already logged in
+  useEffect(() => {
+    if (user && !loading) {
+      navigate("/dashboard");
+    }
+  }, [user, loading, navigate]);
+
+  // If still loading or about to redirect, no need to render the full content
+  if (loading || user) {
+    return (
+      <div className="min-h-screen flex flex-col">
+        <Header />
+        <div className="flex-1 flex items-center justify-center">
+          <div className="p-4 rounded-lg bg-white shadow animate-pulse-subtle">
+            Carregando...
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen flex flex-col">
