@@ -1,4 +1,3 @@
-
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -16,7 +15,7 @@ import {
 const HomePage: React.FC = () => {
   const navigate = useNavigate();
   const { user, loading } = useAuth();
-  
+
   // Redirect if already logged in
   useEffect(() => {
     if (user && !loading) {
@@ -253,7 +252,7 @@ const HomePage: React.FC = () => {
       <footer className="py-8 px-4 border-t border-fut-100">
         <div className="max-w-6xl mx-auto text-center">
           <p className="text-muted-foreground text-sm">
-            &copy; {new Date().getFullYear()} Lista do Fut. Todos os direitos
+            &copy; {new Date().getFullYear()} Fut Evento. Todos os direitos
             reservados.
           </p>
         </div>
