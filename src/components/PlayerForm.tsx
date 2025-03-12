@@ -36,7 +36,7 @@ const PlayerForm: React.FC<PlayerFormProps> = ({ event, onComplete }) => {
     }
   };
 
-  const isFull = event.players.length >= event.maxPlayers;
+  const isFull = event.players.length >= event.max_players;
 
   return (
     <Card className="w-full glass-card animate-fade-in">
@@ -44,8 +44,8 @@ const PlayerForm: React.FC<PlayerFormProps> = ({ event, onComplete }) => {
         <CardTitle className="text-xl text-fut-800">Adicionar seu nome à lista</CardTitle>
         <CardDescription>
           {isFull 
-            ? `Lista cheia (${event.players.length}/${event.maxPlayers})`
-            : `Vagas disponíveis: ${event.players.length}/${event.maxPlayers}`
+            ? `Lista cheia (${event.players.length}/${event.max_players})`
+            : `Vagas disponíveis: ${event.players.length}/${event.max_players}`
           }
         </CardDescription>
       </CardHeader>

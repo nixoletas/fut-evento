@@ -16,7 +16,7 @@ const DashboardPage: React.FC = () => {
   }
 
   // Filter events created by the current user
-  const userEvents = events.filter(event => event.createdBy === user?.id);
+  const userEvents = events.filter(event => event.created_by === user?.id);
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-white to-fut-50">

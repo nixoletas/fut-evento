@@ -17,7 +17,7 @@ const EventPage: React.FC = () => {
   const navigate = useNavigate();
 
   const event = id ? getEvent(id) : undefined;
-  const isCreator = user && event ? user.id === event.createdBy : false;
+  const isCreator = user && event ? user.id === event.created_by : false;
 
   if (loading) {
     return (

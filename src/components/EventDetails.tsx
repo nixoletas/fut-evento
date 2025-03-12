@@ -50,7 +50,7 @@ const EventDetails: React.FC<EventDetailsProps> = ({ event }) => {
           <Users className="h-5 w-5 text-fut-600" />
           <div>
             <p className="text-sm text-muted-foreground">Vagas</p>
-            <p className="font-medium">{event.players.length} confirmados de {event.maxPlayers} vagas</p>
+            <p className="font-medium">{event.players.length} confirmados de {event.max_players} vagas</p>
           </div>
         </div>
 

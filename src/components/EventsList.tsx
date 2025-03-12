@@ -45,7 +45,7 @@ const EventsList: React.FC<EventsListProps> = ({
             </div>
             <div className="flex items-center gap-2 mt-2 text-sm text-muted-foreground">
               <Users className="h-4 w-4 flex-shrink-0" />
-              <span>{event.players.length} / {event.maxPlayers} jogadores</span>
+              <span>{event.players.length} / {event.max_players} jogadores</span>
             </div>
           </CardContent>
           <CardFooter className="pt-0 flex gap-2">

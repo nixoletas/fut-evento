@@ -17,7 +17,7 @@ const EventSharePage: React.FC = () => {
   const navigate = useNavigate();
 
   const event = id ? getEvent(id) : undefined;
-  const isCreator = user && event ? user.id === event.createdBy : false;
+  const isCreator = user && event ? user.id === event.created_by : false;
 
   // If not logged in or not the creator, redirect to the event page
   if (!loading && (!user || !isCreator)) {
