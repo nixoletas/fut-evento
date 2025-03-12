@@ -28,6 +28,7 @@ const JoinEventPage: React.FC = () => {
   }
 
   if (!event) {
+    console.log(`Event not found with ID: ${id}`);
     return <Navigate to="/not-found" replace />;
   }
 
