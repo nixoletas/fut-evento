@@ -1,12 +1,19 @@
-
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { useAuth } from "@/providers/AuthProvider";
 import { useToast } from "@/hooks/use-toast";
+import GoogleButton from "./ui/google-button";
 
 const LoginForm: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -17,7 +24,7 @@ const LoginForm: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!email || !password) {
       toast({
         title: "Erro",
@@ -42,7 +49,9 @@ const LoginForm: React.FC = () => {
   return (
     <Card className="w-full max-w-md mx-auto glass-card animate-fade-in">
       <CardHeader>
-        <CardTitle className="text-2xl text-center text-fut-800">Entrar</CardTitle>
+        <CardTitle className="text-2xl text-center text-fut-800">
+          Entrar
+        </CardTitle>
         <CardDescription className="text-center">
           Acesse sua conta para gerenciar seus eventos
         </CardDescription>
@@ -73,9 +82,23 @@ const LoginForm: React.FC = () => {
               required
             />
           </div>
-          <Button type="submit" className="w-full bg-fut-600 hover:bg-fut-700" disabled={loading}>
+          <Button
+            type="submit"
+            className="w-full bg-fut-600 hover:bg-fut-700"
+            disabled={loading}
+          >
             {loading ? "Entrando..." : "Entrar"}
           </Button>
+          <div
+            onClick={() => {
+              window.open(
+                "https://amgadiltkvpcjtrbfvhx.supabase.co/auth/v1/authorize?provider=google",
+                "_self"
+              );
+            }}
+          >
+            <GoogleButton />
+          </div>
         </form>
       </CardContent>
       <CardFooter className="justify-center">
