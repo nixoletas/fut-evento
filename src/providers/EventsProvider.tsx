@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { FootballEvent, Player } from "@/types";
 import { useAuth } from "./AuthProvider";
@@ -8,11 +7,21 @@ import { supabase } from "@/integrations/supabase/client";
 interface EventsContextType {
   events: FootballEvent[];
   loading: boolean;
-  createEvent: (eventData: Omit<FootballEvent, "id" | "created_by" | "created_at" | "players">) => Promise<FootballEvent>;
+  createEvent: (
+    eventData: Omit<
+      FootballEvent,
+      "id" | "created_by" | "created_at" | "players"
+    >
+  ) => Promise<FootballEvent>;
   getEvent: (id: string) => FootballEvent | undefined;
   addPlayerToEvent: (eventId: string, playerName: string) => Promise<void>;
   removePlayerFromEvent: (eventId: string, playerId: string) => Promise<void>;
-  updatePlayerPosition: (eventId: string, playerId: string, newPosition: number) => Promise<void>;
+  updatePlayerPosition: (
+    eventId: string,
+    playerId: string,
+    newPosition: number
+  ) => Promise<void>;
+  deleteEvent: (eventId: string) => Promise<void>;
 }
 
 const EventsContext = createContext<EventsContextType | undefined>(undefined);
@@ -25,7 +34,9 @@ export const useEvents = () => {
   return context;
 };
 
-export const EventsProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const EventsProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const [events, setEvents] = useState<FootballEvent[]>([]);
   const [loading, setLoading] = useState(true);
   const { user } = useAuth();
@@ -37,8 +48,8 @@ export const EventsProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     try {
       // Get all events
       const { data: eventsData, error: eventsError } = await supabase
-        .from('events')
-        .select('*');
+        .from("events")
+        .select("*");
 
       if (eventsError) {
         throw eventsError;
@@ -46,8 +57,8 @@ export const EventsProvider: React.FC<{ children: React.ReactNode }> = ({ childr
 
       // Get all players
       const { data: playersData, error: playersError } = await supabase
-        .from('players')
-        .select('*');
+        .from("players")
+        .select("*");
 
       if (playersError) {
         throw playersError;
@@ -60,14 +71,14 @@ export const EventsProvider: React.FC<{ children: React.ReactNode }> = ({ childr
           .filter((player: any) => player.event_id === event.id)
           .map((player: any) => ({
             ...player,
-            added_at: new Date(player.added_at)
+            added_at: new Date(player.added_at),
           }));
 
         return {
           ...event,
           date: new Date(event.date),
           created_at: new Date(event.created_at),
-          players: eventPlayers
+          players: eventPlayers,
         };
       });
 
@@ -89,17 +100,25 @@ export const EventsProvider: React.FC<{ children: React.ReactNode }> = ({ childr
 
     // Subscribe to changes
     const eventsSubscription = supabase
-      .channel('events_changes')
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'events' }, () => {
-        fetchEvents();
-      })
+      .channel("events_changes")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "events" },
+        () => {
+          fetchEvents();
+        }
+      )
       .subscribe();
 
     const playersSubscription = supabase
-      .channel('players_changes')
-      .on('postgres_changes', { event: '*', schema: 'public', table: 'players' }, () => {
-        fetchEvents();
-      })
+      .channel("players_changes")
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "players" },
+        () => {
+          fetchEvents();
+        }
+      )
       .subscribe();
 
     return () => {
@@ -108,21 +127,26 @@ export const EventsProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     };
   }, []);
 
-  const createEvent = async (eventData: Omit<FootballEvent, "id" | "created_by" | "created_at" | "players">) => {
+  const createEvent = async (
+    eventData: Omit<
+      FootballEvent,
+      "id" | "created_by" | "created_at" | "players"
+    >
+  ) => {
     if (!user) {
       throw new Error("User must be logged in to create an event");
     }
 
     // Insert event into Supabase
     const { data, error } = await supabase
-      .from('events')
+      .from("events")
       .insert({
         title: eventData.title,
         date: eventData.date.toISOString(),
         location: eventData.location,
         max_players: eventData.max_players,
         description: eventData.description,
-        created_by: user.id
+        created_by: user.id,
       })
       .select()
       .single();
@@ -140,21 +164,21 @@ export const EventsProvider: React.FC<{ children: React.ReactNode }> = ({ childr
       ...data,
       date: new Date(data.date),
       created_at: new Date(data.created_at),
-      players: []
+      players: [],
     };
 
-    setEvents(prev => [...prev, newEvent]);
-    
+    setEvents((prev) => [...prev, newEvent]);
+
     toast({
       title: "Evento criado com sucesso!",
-      description: "Compartilhe o link com seus amigos."
+      description: "Compartilhe o link com seus amigos.",
     });
-    
+
     return newEvent;
   };
 
   const getEvent = (id: string) => {
-    return events.find(event => event.id === id);
+    return events.find((event) => event.id === id);
   };
 
   const addPlayerToEvent = async (eventId: string, playerName: string) => {
@@ -165,20 +189,18 @@ export const EventsProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     }
 
     // Get the next available position
-    const positions = event.players?.map(p => p.position) || [];
+    const positions = event.players?.map((p) => p.position) || [];
     let nextPosition = 1;
     while (positions.includes(nextPosition)) {
       nextPosition++;
     }
 
     // Insert player into Supabase
-    const { error } = await supabase
-      .from('players')
-      .insert({
-        name: playerName,
-        position: nextPosition,
-        event_id: eventId
-      });
+    const { error } = await supabase.from("players").insert({
+      name: playerName,
+      position: nextPosition,
+      event_id: eventId,
+    });
 
     if (error) {
       toast({
@@ -191,9 +213,9 @@ export const EventsProvider: React.FC<{ children: React.ReactNode }> = ({ childr
 
     toast({
       title: "Nome adicionado!",
-      description: "Você foi adicionado à lista."
+      description: "Você foi adicionado à lista.",
     });
-    
+
     // Refresh events data after adding player
     await fetchEvents();
   };
@@ -201,9 +223,9 @@ export const EventsProvider: React.FC<{ children: React.ReactNode }> = ({ childr
   const removePlayerFromEvent = async (eventId: string, playerId: string) => {
     // Delete player from Supabase
     const { error } = await supabase
-      .from('players')
+      .from("players")
       .delete()
-      .eq('id', playerId);
+      .eq("id", playerId);
 
     if (error) {
       toast({
@@ -216,14 +238,18 @@ export const EventsProvider: React.FC<{ children: React.ReactNode }> = ({ childr
 
     toast({
       title: "Jogador removido",
-      description: "O jogador foi removido da lista."
+      description: "O jogador foi removido da lista.",
     });
-    
+
     // Refresh events data after removing player
     await fetchEvents();
   };
 
-  const updatePlayerPosition = async (eventId: string, playerId: string, newPosition: number) => {
+  const updatePlayerPosition = async (
+    eventId: string,
+    playerId: string,
+    newPosition: number
+  ) => {
     // Get the event to check player positions
     const event = getEvent(eventId);
     if (!event) {
@@ -231,40 +257,93 @@ export const EventsProvider: React.FC<{ children: React.ReactNode }> = ({ childr
     }
 
     // Check if the position is already taken
-    const positionTaken = event.players?.some(p => p.id !== playerId && p.position === newPosition);
+    const positionTaken = event.players?.some(
+      (p) => p.id !== playerId && p.position === newPosition
+    );
     if (positionTaken) {
       throw new Error("Esta posição já está ocupada");
     }
 
     // Update player position in Supabase
     const { error } = await supabase
-      .from('players')
+      .from("players")
       .update({ position: newPosition })
-      .eq('id', playerId);
+      .eq("id", playerId);
 
     if (error) {
       toast({
         title: "Erro",
-        description: "Não foi possível atualizar a posição do jogador. Tente novamente.",
+        description:
+          "Não foi possível atualizar a posição do jogador. Tente novamente.",
         variant: "destructive",
       });
       throw error;
     }
-    
+
     // Refresh events data after updating player position
     await fetchEvents();
   };
 
+  const deleteEvent = async (eventId: string) => {
+    try {
+      // First delete all players associated with the event
+      const { error: playersDeleteError } = await supabase
+        .from("players")
+        .delete()
+        .eq("event_id", eventId);
+
+      if (playersDeleteError) {
+        toast({
+          title: "Erro",
+          description:
+            "Não foi possível remover os jogadores do evento. Tente novamente.",
+          variant: "destructive",
+        });
+        throw playersDeleteError;
+      }
+
+      // Then delete the event itself
+      const { error: eventDeleteError } = await supabase
+        .from("events")
+        .delete()
+        .eq("id", eventId);
+
+      if (eventDeleteError) {
+        toast({
+          title: "Erro",
+          description: "Não foi possível remover o evento. Tente novamente.",
+          variant: "destructive",
+        });
+        throw eventDeleteError;
+      }
+
+      toast({
+        title: "Evento removido",
+        description:
+          "O evento e todos os jogadores foram removidos com sucesso.",
+      });
+
+      // Refresh events data after deleting event and players
+      await fetchEvents();
+    } catch (error) {
+      console.error("Error deleting event:", error);
+      throw error;
+    }
+  };
+
   return (
-    <EventsContext.Provider value={{ 
-      events, 
-      loading, 
-      createEvent, 
-      getEvent, 
-      addPlayerToEvent, 
-      removePlayerFromEvent,
-      updatePlayerPosition
-    }}>
+    <EventsContext.Provider
+      value={{
+        events,
+        loading,
+        createEvent,
+        getEvent,
+        addPlayerToEvent,
+        removePlayerFromEvent,
+        updatePlayerPosition,
+        deleteEvent,
+      }}
+    >
       {children}
     </EventsContext.Provider>
   );

@@ -9,13 +9,14 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { AlertTriangle, Calendar, MapPin, Users } from "lucide-react";
+import { AlertTriangle, Calendar, MapPin, Users, Trash2 } from "lucide-react";
 import { FootballEvent } from "@/types";
 import { formatDate, formatTime } from "@/lib/utils";
 
 interface EventsListProps {
   events: FootballEvent[];
   emptyMessage?: string;
+  onDeleteEvent?: (eventId: string) => void;
 }
 
 const isTomorrow = (eventDate: Date) => {
@@ -47,6 +48,7 @@ const isToday = (eventDate: Date) => {
 const EventsList: React.FC<EventsListProps> = ({
   events,
   emptyMessage = "Você ainda não tem eventos criados.",
+  onDeleteEvent,
 }) => {
   const now = new Date();
 
@@ -123,6 +125,16 @@ const EventsList: React.FC<EventsListProps> = ({
             >
               <Link to={`/event/${event.id}/share`}>Compartilhar</Link>
             </Button>
+            {onDeleteEvent && (
+              <Button
+                size="sm"
+                variant="destructive"
+                className="flex-shrink-0"
+                onClick={() => onDeleteEvent(event.id)}
+              >
+                <Trash2 className="h-4 w-4" />
+              </Button>
+            )}
           </CardFooter>
         </Card>
       ))}
