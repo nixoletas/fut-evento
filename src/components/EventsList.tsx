@@ -48,6 +48,17 @@ const EventsList: React.FC<EventsListProps> = ({
   events,
   emptyMessage = "Você ainda não tem eventos criados.",
 }) => {
+  const now = new Date();
+
+  // Separate and sort events
+  const upcomingEvents = [...events]
+    .filter((event) => new Date(event.date) >= now)
+    .sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
+
+  const pastEvents = [...events]
+    .filter((event) => new Date(event.date) <= now)
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
   if (events.length === 0) {
     return (
       <div className="text-center p-8 bg-muted/30 rounded-lg animate-fade-in">
@@ -59,8 +70,8 @@ const EventsList: React.FC<EventsListProps> = ({
     );
   }
 
-  return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 animate-fade-in">
+  const renderEvents = (events: FootballEvent[]) => (
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {events.map((event) => (
         <Card
           key={event.id}
@@ -115,6 +126,28 @@ const EventsList: React.FC<EventsListProps> = ({
           </CardFooter>
         </Card>
       ))}
+    </div>
+  );
+
+  return (
+    <div className="space-y-8 animate-fade-in">
+      {upcomingEvents.length > 0 && (
+        <div>
+          <h2 className="text-2xl font-bold text-fut-800 mb-4">
+            Próximos Eventos
+          </h2>
+          {renderEvents(upcomingEvents)}
+        </div>
+      )}
+
+      {pastEvents.length > 0 && (
+        <div className="opacity-75">
+          <h2 className="text-2xl font-bold text-fut-800 mb-4">
+            Eventos Anteriores
+          </h2>
+          {renderEvents(pastEvents)}
+        </div>
+      )}
     </div>
   );
 };
