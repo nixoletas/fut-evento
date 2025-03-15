@@ -1,6 +1,11 @@
-
 import React from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Calendar, Clock, MapPin, Users, Info } from "lucide-react";
 import { FootballEvent } from "@/types";
@@ -15,9 +20,7 @@ const EventDetails: React.FC<EventDetailsProps> = ({ event }) => {
     <Card className="w-full glass-card animate-fade-in">
       <CardHeader>
         <CardTitle className="text-2xl text-fut-800">{event.title}</CardTitle>
-        <CardDescription>
-          Detalhes do evento
-        </CardDescription>
+        <CardDescription>Detalhes do evento</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -28,7 +31,7 @@ const EventDetails: React.FC<EventDetailsProps> = ({ event }) => {
               <p className="font-medium">{formatDate(event.date)}</p>
             </div>
           </div>
-          
+
           <div className="flex items-center gap-3 p-3 bg-white/50 rounded-lg border border-border">
             <Clock className="h-5 w-5 text-fut-600" />
             <div>
@@ -50,7 +53,9 @@ const EventDetails: React.FC<EventDetailsProps> = ({ event }) => {
           <Users className="h-5 w-5 text-fut-600" />
           <div>
             <p className="text-sm text-muted-foreground">Vagas</p>
-            <p className="font-medium">{event.players.length} confirmados de {event.max_players} vagas</p>
+            <p className="font-medium">
+              {event.players.length} confirmados de {event.max_players} vagas
+            </p>
           </div>
         </div>
 
@@ -58,8 +63,12 @@ const EventDetails: React.FC<EventDetailsProps> = ({ event }) => {
           <div className="flex gap-3 p-3 bg-white/50 rounded-lg border border-border">
             <Info className="h-5 w-5 text-fut-600 flex-shrink-0 mt-0.5" />
             <div>
-              <p className="text-sm text-muted-foreground">Detalhes adicionais</p>
-              <p className="font-medium whitespace-pre-line">{event.description}</p>
+              <p className="text-sm text-muted-foreground">
+                Detalhes adicionais
+              </p>
+              <p className="font-medium whitespace-pre-line">
+                {event.description}
+              </p>
             </div>
           </div>
         )}

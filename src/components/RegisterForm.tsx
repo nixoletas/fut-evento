@@ -1,12 +1,23 @@
-
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { useAuth } from "@/providers/AuthProvider";
 import { useToast } from "@/hooks/use-toast";
+import GoogleButton from "./ui/google-button";
+
+const googleLogin = () => {
+  console.log("google login");
+};
 
 const RegisterForm: React.FC = () => {
   const [name, setName] = useState("");
@@ -19,7 +30,7 @@ const RegisterForm: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!name || !email || !password || !confirmPassword) {
       toast({
         title: "Erro",
@@ -53,7 +64,9 @@ const RegisterForm: React.FC = () => {
   return (
     <Card className="w-full max-w-md mx-auto glass-card animate-fade-in">
       <CardHeader>
-        <CardTitle className="text-2xl text-center text-fut-800">Criar Conta</CardTitle>
+        <CardTitle className="text-2xl text-center text-fut-800">
+          Criar Conta
+        </CardTitle>
         <CardDescription className="text-center">
           Cadastre-se para organizar eventos de futebol
         </CardDescription>
@@ -107,10 +120,24 @@ const RegisterForm: React.FC = () => {
               required
             />
           </div>
-          <Button type="submit" className="w-full bg-fut-600 hover:bg-fut-700" disabled={loading}>
+          <Button
+            type="submit"
+            className="w-full bg-fut-600 hover:bg-fut-700"
+            disabled={loading}
+          >
             {loading ? "Criando conta..." : "Criar Conta"}
           </Button>
         </form>
+        <div
+          onClick={() => {
+            window.open(
+              "https://amgadiltkvpcjtrbfvhx.supabase.co/auth/v1/authorize?provider=google",
+              "_self"
+            );
+          }}
+        >
+          <GoogleButton />
+        </div>
       </CardContent>
       <CardFooter className="justify-center">
         <Button variant="link" onClick={() => navigate("/login")}>
