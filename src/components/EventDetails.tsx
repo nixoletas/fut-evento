@@ -5,17 +5,24 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
+  CardFooter,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Calendar, Clock, MapPin, Users, Info } from "lucide-react";
+import { Calendar, Clock, MapPin, Users, Info, Trash2 } from "lucide-react";
 import { FootballEvent } from "@/types";
 import { formatDate, formatTime } from "@/lib/utils";
 
 interface EventDetailsProps {
   event: FootballEvent;
+  onDelete?: (eventId: string) => void;
+  showDeleteButton?: boolean;
 }
 
-const EventDetails: React.FC<EventDetailsProps> = ({ event }) => {
+const EventDetails: React.FC<EventDetailsProps> = ({
+  event,
+  onDelete,
+  showDeleteButton = false,
+}) => {
   return (
     <Card className="w-full glass-card animate-fade-in">
       <CardHeader>
@@ -73,6 +80,18 @@ const EventDetails: React.FC<EventDetailsProps> = ({ event }) => {
           </div>
         )}
       </CardContent>
+      {showDeleteButton && onDelete && (
+        <CardFooter className="pt-2">
+          <Button
+            variant="destructive"
+            className="w-full"
+            onClick={() => onDelete(event.id)}
+          >
+            <Trash2 className="h-4 w-4 mr-2" />
+            Excluir Evento
+          </Button>
+        </CardFooter>
+      )}
     </Card>
   );
 };

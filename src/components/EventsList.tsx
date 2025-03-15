@@ -125,16 +125,6 @@ const EventsList: React.FC<EventsListProps> = ({
             >
               <Link to={`/event/${event.id}/share`}>Compartilhar</Link>
             </Button>
-            {onDeleteEvent && (
-              <Button
-                size="sm"
-                variant="destructive"
-                className="flex-shrink-0"
-                onClick={() => onDeleteEvent(event.id)}
-              >
-                <Trash2 className="h-4 w-4" />
-              </Button>
-            )}
           </CardFooter>
         </Card>
       ))}
