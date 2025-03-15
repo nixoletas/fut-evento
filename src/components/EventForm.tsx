@@ -14,18 +14,32 @@ import {
 } from "@/components/ui/card";
 import { useEvents } from "@/providers/EventsProvider";
 import { useToast } from "@/hooks/use-toast";
+import PlacesAutocomplete from "./PlacesAutocomplete";
 
 const EventForm: React.FC = () => {
   const [title, setTitle] = useState("");
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
   const [location, setLocation] = useState("");
+  const [locationCoords, setLocationCoords] = useState<{
+    lat: number;
+    lng: number;
+  } | null>(null);
   const [maxPlayers, setMaxPlayers] = useState(10);
   const [description, setDescription] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { createEvent } = useEvents();
   const { toast } = useToast();
   const navigate = useNavigate();
+
+  const handleLocationSelect = (location: {
+    address: string;
+    lat: number;
+    lng: number;
+  }) => {
+    setLocation(location.address);
+    setLocationCoords({ lat: location.lat, lng: location.lng });
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -55,6 +69,8 @@ const EventForm: React.FC = () => {
         title,
         date: combinedDateTime,
         location,
+        location_lat: locationCoords?.lat,
+        location_lng: locationCoords?.lng,
         max_players: maxPlayers,
         description,
       });
@@ -73,7 +89,12 @@ const EventForm: React.FC = () => {
 
   return (
     <Card className="w-full max-w-2xl mx-auto glass-card animate-fade-in">
-      <CardHeader></CardHeader>
+      <CardHeader>
+        <CardTitle className="text-2xl text-fut-800">
+          Criar Novo Evento
+        </CardTitle>
+        <CardDescription>Preencha os detalhes do seu evento</CardDescription>
+      </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
@@ -113,17 +134,10 @@ const EventForm: React.FC = () => {
             </div>
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="location">Local*</Label>
-            <Input
-              id="location"
-              value={location}
-              onChange={(e) => setLocation(e.target.value)}
-              placeholder="Ex: Quadra do Parque Central"
-              className="bg-white/50"
-              required
-            />
-          </div>
+          <PlacesAutocomplete
+            onLocationSelect={handleLocationSelect}
+            defaultValue={location}
+          />
 
           <div className="space-y-2">
             <Label htmlFor="maxPlayers">Número Máximo de Jogadores*</Label>
