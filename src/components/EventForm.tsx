@@ -1,11 +1,17 @@
-
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { useEvents } from "@/providers/EventsProvider";
 import { useToast } from "@/hooks/use-toast";
 
@@ -23,7 +29,7 @@ const EventForm: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!title || !date || !time || !location) {
       toast({
         title: "Erro",
@@ -50,9 +56,9 @@ const EventForm: React.FC = () => {
         date: combinedDateTime,
         location,
         max_players: maxPlayers,
-        description
+        description,
       });
-      
+
       navigate(`/event/${newEvent.id}/share`);
     } catch (error) {
       toast({
@@ -67,12 +73,7 @@ const EventForm: React.FC = () => {
 
   return (
     <Card className="w-full max-w-2xl mx-auto glass-card animate-fade-in">
-      <CardHeader>
-        <CardTitle className="text-2xl text-center text-fut-800">Criar Novo Evento</CardTitle>
-        <CardDescription className="text-center">
-          Preencha os detalhes do seu evento de futebol
-        </CardDescription>
-      </CardHeader>
+      <CardHeader></CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
@@ -86,7 +87,7 @@ const EventForm: React.FC = () => {
               required
             />
           </div>
-          
+
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="date">Data*</Label>
@@ -111,7 +112,7 @@ const EventForm: React.FC = () => {
               />
             </div>
           </div>
-          
+
           <div className="space-y-2">
             <Label htmlFor="location">Local*</Label>
             <Input
@@ -123,7 +124,7 @@ const EventForm: React.FC = () => {
               required
             />
           </div>
-          
+
           <div className="space-y-2">
             <Label htmlFor="maxPlayers">Número Máximo de Jogadores*</Label>
             <Input
@@ -137,7 +138,7 @@ const EventForm: React.FC = () => {
               required
             />
           </div>
-          
+
           <div className="space-y-2">
             <Label htmlFor="description">Descrição (opcional)</Label>
             <Textarea
@@ -148,10 +149,10 @@ const EventForm: React.FC = () => {
               className="bg-white/50 min-h-[100px]"
             />
           </div>
-          
-          <Button 
-            type="submit" 
-            className="w-full bg-fut-600 hover:bg-fut-700" 
+
+          <Button
+            type="submit"
+            className="w-full bg-fut-600 hover:bg-fut-700"
             disabled={isSubmitting}
           >
             {isSubmitting ? "Criando evento..." : "Criar Evento"}
