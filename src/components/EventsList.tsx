@@ -21,7 +21,6 @@ interface EventsListProps {
 
 const isTomorrow = (eventDate: Date) => {
   const eventDay = new Date(eventDate);
-  console.log(eventDay);
   const today = new Date();
 
   // Definir horários para garantir que estamos comparando apenas o dia
