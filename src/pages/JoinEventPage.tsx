@@ -19,7 +19,7 @@ const JoinEventPage: React.FC = () => {
     return (
       <div className="min-h-screen flex flex-col bg-gradient-to-b from-white to-fut-50">
         <Helmet>
-          <title>Carregando... | Fut Evento</title>
+          <title>Carregando... | ${event.title}</title>
         </Helmet>
         <Header />
         <div className="flex-1 flex items-center justify-center">
@@ -51,7 +51,7 @@ const JoinEventPage: React.FC = () => {
         {/* Open Graph / Social Media Meta Tags */}
         <meta property="og:type" content="website" />
         <meta property="og:url" content={currentUrl} />
-        <meta property="og:title" content={`${event.title} - Fut Evento`} />
+        <meta property="og:title" content={`${event.title} | Fut Evento`} />
         <meta property="og:description" content={metaDescription} />
         <meta property="og:image" content="/og-image.png" />
         <meta property="og:image:width" content="1200" />
