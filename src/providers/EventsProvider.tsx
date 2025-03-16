@@ -144,6 +144,8 @@ export const EventsProvider: React.FC<{ children: React.ReactNode }> = ({
         title: eventData.title,
         date: eventData.date.toISOString(),
         location: eventData.location,
+        location_lat: eventData.location_lat,
+        location_lng: eventData.location_lng,
         max_players: eventData.max_players,
         description: eventData.description,
         created_by: user.id,

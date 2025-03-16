@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import {
   Card,
   CardContent,
@@ -8,7 +8,15 @@ import {
   CardFooter,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Calendar, Clock, MapPin, Users, Info, Trash2 } from "lucide-react";
+import {
+  Calendar,
+  Clock,
+  MapPin,
+  Users,
+  Info,
+  Trash2,
+  Navigation,
+} from "lucide-react";
 import { FootballEvent } from "@/types";
 import { formatDate, formatTime } from "@/lib/utils";
 
@@ -23,6 +31,43 @@ const EventDetails: React.FC<EventDetailsProps> = ({
   onDelete,
   showDeleteButton = false,
 }) => {
+  const mapRef = useRef<HTMLDivElement>(null);
+  const googleMapRef = useRef<google.maps.Map | null>(null);
+  const markerRef = useRef<google.maps.Marker | null>(null);
+
+  useEffect(() => {
+    if (
+      mapRef.current &&
+      !googleMapRef.current &&
+      event.location_lat &&
+      event.location_lng &&
+      window.google?.maps
+    ) {
+      const location = { lat: event.location_lat, lng: event.location_lng };
+
+      googleMapRef.current = new window.google.maps.Map(mapRef.current, {
+        zoom: 15,
+        center: location,
+        mapTypeControl: false,
+        streetViewControl: false,
+        fullscreenControl: false,
+      });
+
+      markerRef.current = new window.google.maps.Marker({
+        position: location,
+        map: googleMapRef.current,
+        animation: window.google.maps.Animation.DROP,
+      });
+    }
+  }, [event.location_lat, event.location_lng]);
+
+  const handleOpenMaps = () => {
+    if (event.location_lat && event.location_lng) {
+      const url = `https://www.google.com/maps/search/?api=1&query=${event.location_lat},${event.location_lng}`;
+      window.open(url, "_blank");
+    }
+  };
+
   return (
     <Card className="w-full glass-card animate-fade-in">
       <CardHeader>
@@ -49,12 +94,32 @@ const EventDetails: React.FC<EventDetailsProps> = ({
           </div>
         </div>
 
-        <div className="flex items-center gap-3 p-3 bg-white/50 rounded-lg border border-border">
-          <MapPin className="h-5 w-5 text-fut-600" />
-          <div>
-            <p className="text-sm text-muted-foreground">Local</p>
-            <p className="font-medium">{event.location}</p>
+        <div className="space-y-2">
+          <div className="flex items-center gap-3 p-3 bg-white/50 rounded-lg border border-border">
+            <MapPin className="h-5 w-5 text-fut-600" />
+            <div>
+              <p className="text-sm text-muted-foreground">Local</p>
+              <p className="font-medium">{event.location}</p>
+            </div>
           </div>
+
+          {event.location_lat && event.location_lng && (
+            <div className="relative">
+              <div
+                ref={mapRef}
+                className="w-full h-[200px] rounded-lg overflow-hidden border border-input bg-white/50"
+              />
+              <Button
+                size="sm"
+                variant="secondary"
+                className="absolute bottom-4 right-4 shadow-md"
+                onClick={handleOpenMaps}
+              >
+                <Navigation className="w-4 h-4 mr-2" />
+                Abrir no Maps
+              </Button>
+            </div>
+          )}
         </div>
 
         <div className="flex items-center gap-3 p-3 bg-white/50 rounded-lg border border-border">
