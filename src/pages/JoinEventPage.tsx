@@ -41,6 +41,7 @@ const JoinEventPage: React.FC = () => {
     event.players.length
   }/${event.max_players} jogadores confirmados. ${event.description || ""}`;
   const currentUrl = `${window.location.origin}/join/${event.id}`;
+  const imageUrl = `${window.location.origin}/og-image.png`;
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-white to-fut-50">
@@ -53,13 +54,29 @@ const JoinEventPage: React.FC = () => {
         <meta property="og:url" content={currentUrl} />
         <meta property="og:title" content={`${event.title} - Fut Evento`} />
         <meta property="og:description" content={metaDescription} />
-        <meta property="og:image" content="/og-image.png" />
+        <meta property="og:image" content={imageUrl} />
         <meta property="og:image:width" content="1200" />
         <meta property="og:image:height" content="630" />
+        <meta
+          property="og:image:alt"
+          content={`${event.title} - Detalhes do evento`}
+        />
 
         {/* WhatsApp specific */}
         <meta property="og:site_name" content="Fut Evento" />
         <meta property="og:locale" content="pt_BR" />
+
+        {/* Additional meta tags for better sharing */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:image" content={imageUrl} />
+        <meta name="twitter:title" content={`${event.title} - Fut Evento`} />
+        <meta name="twitter:description" content={metaDescription} />
+
+        {/* Force WhatsApp to fetch new metadata */}
+        <meta name="theme-color" content="#4ade80" />
+        <meta httpEquiv="cache-control" content="no-cache" />
+        <meta httpEquiv="expires" content="0" />
+        <meta httpEquiv="pragma" content="no-cache" />
       </Helmet>
 
       <Header />
