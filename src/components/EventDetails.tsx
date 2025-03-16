@@ -45,6 +45,10 @@ const EventDetails: React.FC<EventDetailsProps> = ({
     event.date.toISOString().split("T")[0]
   );
   const [editedTime, setEditedTime] = useState(formatTime(event.date));
+  const [editedDuration, setEditedDuration] = useState(event.duration_min);
+  const [editedDescription, setEditedDescription] = useState(
+    event.description || ""
+  );
   const mapRef = useRef<HTMLDivElement>(null);
   const googleMapRef = useRef<google.maps.Map | null>(null);
   const markerRef = useRef<google.maps.Marker | null>(null);
@@ -93,6 +97,8 @@ const EventDetails: React.FC<EventDetailsProps> = ({
       await updateEvent(event.id, {
         max_players: editedMaxPlayers,
         date: newDate,
+        duration_min: editedDuration,
+        description: editedDescription || undefined,
       });
       setIsEditing(false);
     } catch (error) {
@@ -104,6 +110,8 @@ const EventDetails: React.FC<EventDetailsProps> = ({
     setEditedMaxPlayers(event.max_players);
     setEditedDate(event.date.toISOString().split("T")[0]);
     setEditedTime(formatTime(event.date));
+    setEditedDuration(event.duration_min);
+    setEditedDescription(event.description || "");
     setIsEditing(false);
   };
 
@@ -164,17 +172,46 @@ const EventDetails: React.FC<EventDetailsProps> = ({
 
           <div className="flex items-center gap-3 p-3 bg-white/50 rounded-lg border border-border">
             <Clock className="h-5 w-5 text-fut-600" />
-            <div>
-              <p className="text-sm text-muted-foreground">Horário</p>
-              <p className="font-medium">
-                {formatTime(event.date)} -{" "}
-                {formatTime(
-                  new Date(event.date.getTime() + event.duration_min * 60000)
-                )}
-                <span className="text-sm text-muted-foreground ml-2">
-                  ({event.duration_min} min)
-                </span>
-              </p>
+            <div className="flex-1">
+              {isEditing ? (
+                <div className="space-y-2">
+                  <Input
+                    type="time"
+                    value={editedTime}
+                    onChange={(e) => setEditedTime(e.target.value)}
+                    className="max-w-[200px]"
+                  />
+                  <div className="flex items-center gap-2">
+                    <Input
+                      type="number"
+                      min={30}
+                      max={240}
+                      step={15}
+                      value={editedDuration}
+                      onChange={(e) =>
+                        setEditedDuration(parseInt(e.target.value))
+                      }
+                      className="max-w-[100px]"
+                    />
+                    <span className="text-sm text-muted-foreground">min</span>
+                  </div>
+                </div>
+              ) : (
+                <div>
+                  <p className="text-sm text-muted-foreground">Horário</p>
+                  <p className="font-medium">
+                    {formatTime(event.date)} -{" "}
+                    {formatTime(
+                      new Date(
+                        event.date.getTime() + event.duration_min * 60000
+                      )
+                    )}
+                    <span className="text-sm text-muted-foreground ml-2">
+                      ({event.duration_min} min)
+                    </span>
+                  </p>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -227,16 +264,25 @@ const EventDetails: React.FC<EventDetailsProps> = ({
           </div>
         </div>
 
-        {event.description && (
+        {(isEditing || event.description) && (
           <div className="flex gap-3 p-3 bg-white/50 rounded-lg border border-border">
             <Info className="h-5 w-5 text-fut-600 flex-shrink-0 mt-0.5" />
-            <div>
+            <div className="flex-1">
               <p className="text-sm text-muted-foreground">
                 Detalhes adicionais
               </p>
-              <p className="font-medium whitespace-pre-line">
-                {event.description}
-              </p>
+              {isEditing ? (
+                <textarea
+                  value={editedDescription}
+                  onChange={(e) => setEditedDescription(e.target.value)}
+                  placeholder="Informações adicionais, como o que levar, preço, etc."
+                  className="w-full mt-2 min-h-[100px] rounded-md border bg-white/50 px-3 py-2 text-sm"
+                />
+              ) : (
+                <p className="font-medium whitespace-pre-line">
+                  {event.description}
+                </p>
+              )}
             </div>
           </div>
         )}

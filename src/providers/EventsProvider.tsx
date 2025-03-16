@@ -15,7 +15,12 @@ interface EventsContextType {
   ) => Promise<FootballEvent>;
   updateEvent: (
     eventId: string,
-    eventData: Partial<Pick<FootballEvent, "max_players" | "date">>
+    eventData: Partial<
+      Pick<
+        FootballEvent,
+        "max_players" | "date" | "duration_min" | "description"
+      >
+    >
   ) => Promise<void>;
   getEvent: (id: string) => FootballEvent | undefined;
   addPlayerToEvent: (eventId: string, playerName: string) => Promise<void>;
@@ -341,7 +346,12 @@ export const EventsProvider: React.FC<{ children: React.ReactNode }> = ({
 
   const updateEvent = async (
     eventId: string,
-    eventData: Partial<Pick<FootballEvent, "max_players" | "date">>
+    eventData: Partial<
+      Pick<
+        FootballEvent,
+        "max_players" | "date" | "duration_min" | "description"
+      >
+    >
   ) => {
     if (!user) {
       throw new Error("User must be logged in to update an event");
@@ -370,6 +380,12 @@ export const EventsProvider: React.FC<{ children: React.ReactNode }> = ({
     }
     if (eventData.date !== undefined) {
       updateData.date = eventData.date.toISOString();
+    }
+    if (eventData.duration_min !== undefined) {
+      updateData.duration_min = eventData.duration_min;
+    }
+    if (eventData.description !== undefined) {
+      updateData.description = eventData.description;
     }
 
     // Update event in Supabase
