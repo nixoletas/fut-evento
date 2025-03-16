@@ -80,7 +80,6 @@ const EventDetails: React.FC<EventDetailsProps> = ({
           <div className="flex items-center gap-3 p-3 bg-white/50 rounded-lg border border-border">
             <Calendar className="h-5 w-5 text-fut-600" />
             <div>
-              <p className="text-sm text-muted-foreground">Data</p>
               <p className="font-medium">{formatDate(event.date)}</p>
             </div>
           </div>
@@ -88,7 +87,6 @@ const EventDetails: React.FC<EventDetailsProps> = ({
           <div className="flex items-center gap-3 p-3 bg-white/50 rounded-lg border border-border">
             <Clock className="h-5 w-5 text-fut-600" />
             <div>
-              <p className="text-sm text-muted-foreground">Horário</p>
               <p className="font-medium">{formatTime(event.date)}</p>
             </div>
           </div>
