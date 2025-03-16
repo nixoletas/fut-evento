@@ -41,6 +41,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
             session.user.user_metadata?.name ||
             session.user.email?.split("@")[0] ||
             "",
+          avatar_url: session.user.user_metadata?.avatar_url || "",
         });
       } else {
         setUser(null);
@@ -61,6 +62,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
             session.user.user_metadata?.name ||
             session.user.email?.split("@")[0] ||
             "",
+          avatar_url: session.user.user_metadata?.avatar_url || "",
         });
       }
       setLoading(false);

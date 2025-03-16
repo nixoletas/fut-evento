@@ -53,6 +53,11 @@ const Header: React.FC = () => {
         <div className="flex items-center gap-2">
           <div className="hidden sm:flex items-center gap-2">
             <span className="text-sm text-fut-600">Olá, {user.name}</span>
+            <img
+              src={user.avatar_url}
+              alt=""
+              className="w-6 h-6 rounded-full"
+            />
             <Button variant="ghost" size="sm" asChild>
               <Link to="/dashboard">Meus Eventos</Link>
             </Button>
