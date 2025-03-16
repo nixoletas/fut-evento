@@ -25,12 +25,13 @@ const EventForm: React.FC = () => {
     lat: number;
     lng: number;
   } | null>(null);
-  const [maxPlayers, setMaxPlayers] = useState(10);
+  const [maxPlayers, setMaxPlayers] = useState(20);
   const [description, setDescription] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { createEvent } = useEvents();
   const { toast } = useToast();
   const navigate = useNavigate();
+  const [duration, setDuration] = useState(90);
 
   const handleLocationSelect = (location: {
     address: string;
@@ -73,6 +74,7 @@ const EventForm: React.FC = () => {
         location_lng: locationCoords?.lng,
         max_players: maxPlayers,
         description,
+        duration_min: duration,
       });
 
       navigate(`/event/${newEvent.id}/share`);
@@ -151,6 +153,23 @@ const EventForm: React.FC = () => {
               className="bg-white/50"
               required
             />
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-1 gap-4">
+            <div className="space-y-2">
+              <Label htmlFor="duration">Duração (minutos)*</Label>
+              <Input
+                id="duration"
+                type="number"
+                min={30}
+                max={240}
+                step={15}
+                value={duration}
+                onChange={(e) => setDuration(parseInt(e.target.value))}
+                className="bg-white/50"
+                required
+              />
+            </div>
           </div>
 
           <div className="space-y-2">

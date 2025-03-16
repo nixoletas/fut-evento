@@ -164,17 +164,17 @@ const EventDetails: React.FC<EventDetailsProps> = ({
 
           <div className="flex items-center gap-3 p-3 bg-white/50 rounded-lg border border-border">
             <Clock className="h-5 w-5 text-fut-600" />
-            <div className="flex-1">
-              {isEditing ? (
-                <Input
-                  type="time"
-                  value={editedTime}
-                  onChange={(e) => setEditedTime(e.target.value)}
-                  className="max-w-[200px]"
-                />
-              ) : (
-                <p className="font-medium">{formatTime(event.date)}</p>
-              )}
+            <div>
+              <p className="text-sm text-muted-foreground">Horário</p>
+              <p className="font-medium">
+                {formatTime(event.date)} -{" "}
+                {formatTime(
+                  new Date(event.date.getTime() + event.duration_min * 60000)
+                )}
+                <span className="text-sm text-muted-foreground ml-2">
+                  ({event.duration_min} min)
+                </span>
+              </p>
             </div>
           </div>
         </div>

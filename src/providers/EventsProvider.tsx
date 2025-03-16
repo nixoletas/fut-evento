@@ -153,6 +153,7 @@ export const EventsProvider: React.FC<{ children: React.ReactNode }> = ({
         max_players: eventData.max_players,
         description: eventData.description,
         created_by: user.id,
+        duration_min: eventData.duration_min,
       })
       .select()
       .single();
@@ -171,6 +172,7 @@ export const EventsProvider: React.FC<{ children: React.ReactNode }> = ({
       date: new Date(data.date),
       created_at: new Date(data.created_at),
       players: [],
+      duration_min: eventData.duration_min,
     };
 
     setEvents((prev) => [...prev, newEvent]);
