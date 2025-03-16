@@ -38,7 +38,6 @@ const EventPage: React.FC = () => {
                       await deleteEvent(eventId);
                       toast.dismiss(t);
                       navigate("/dashboard");
-                      resolve("Evento excluído com sucesso");
                     } catch (error) {
                       reject(error);
                     }

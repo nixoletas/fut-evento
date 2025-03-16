@@ -1,10 +1,15 @@
-
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useEvents } from "@/providers/EventsProvider";
 import { FootballEvent } from "@/types";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 
 interface PlayerFormProps {
@@ -19,7 +24,7 @@ const PlayerForm: React.FC<PlayerFormProps> = ({ event, onComplete }) => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!name.trim()) {
       return;
     }
@@ -41,34 +46,38 @@ const PlayerForm: React.FC<PlayerFormProps> = ({ event, onComplete }) => {
   return (
     <Card className="w-full glass-card animate-fade-in">
       <CardHeader className="pb-3">
-        <CardTitle className="text-xl text-fut-800">Adicionar seu nome à lista</CardTitle>
+        <CardTitle className="text-xl text-fut-800">
+          Adicionar seu nome à lista
+        </CardTitle>
         <CardDescription>
-          {isFull 
+          {isFull
             ? `Lista cheia (${event.players.length}/${event.max_players})`
-            : `Vagas disponíveis: ${event.players.length}/${event.max_players}`
-          }
+            : `Vagas disponíveis: ${event.players.length}/${event.max_players}`}
         </CardDescription>
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
-            <Label htmlFor="playerName">Seu Nome</Label>
             <Input
               id="playerName"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              placeholder="Digite seu nome completo"
+              placeholder="Digite seu nome"
               className="bg-white/50"
               disabled={isFull || isSubmitting}
               required
             />
           </div>
-          <Button 
-            type="submit" 
-            className="w-full bg-fut-600 hover:bg-fut-700" 
+          <Button
+            type="submit"
+            className="w-full bg-fut-600 hover:bg-fut-700"
             disabled={isFull || isSubmitting || !name.trim()}
           >
-            {isSubmitting ? "Adicionando..." : isFull ? "Lista Completa" : "Confirmar Presença"}
+            {isSubmitting
+              ? "Adicionando..."
+              : isFull
+              ? "Lista Completa"
+              : "Confirmar Presença"}
           </Button>
         </form>
       </CardContent>
