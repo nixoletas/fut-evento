@@ -13,6 +13,8 @@ import {
   CommandItem,
   CommandList,
 } from "@/components/ui/command";
+import { DialogTitle } from "@/components/ui/dialog";
+import { VisuallyHidden } from "@/components/ui/visually-hidden";
 import { MapPin } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
@@ -148,6 +150,9 @@ const PlacesAutocomplete: React.FC<PlacesAutocompleteProps> = ({
       />
 
       <CommandDialog open={open} onOpenChange={setOpen}>
+        <VisuallyHidden>
+          <DialogTitle>Buscar Local</DialogTitle>
+        </VisuallyHidden>
         <CommandInput
           placeholder="Busque um local..."
           value={value}
