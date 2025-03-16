@@ -44,18 +44,23 @@ const PlayerForm: React.FC<PlayerFormProps> = ({ event, onComplete }) => {
   const isFull = event.players.length >= event.max_players;
 
   return (
-    <Card className="w-full glass-card animate-fade-in">
-      <CardHeader className="pb-3">
-        <CardTitle className="text-xl text-fut-800">
+    <Card className="w-full glass-card animate-fade-in border-2 border-fut-600 shadow-lg shadow-fut-100">
+      <CardHeader className="pb-3 bg-fut-50 rounded-t-lg border-b border-fut-200">
+        <CardTitle className="text-xl text-fut-800 flex justify-center flex-col items-center gap-2">
+          <span className="bg-fut-600 text-white p-1 rounded-md text-sm">
+            {isFull ? "LISTA CHEIA" : "PARTICIPE"}
+          </span>
           Adicionar seu nome à lista
         </CardTitle>
-        <CardDescription>
+        <CardDescription className="font-medium">
           {isFull
             ? `Lista cheia (${event.players.length}/${event.max_players})`
-            : `Vagas disponíveis: ${event.players.length}/${event.max_players}`}
+            : `Vagas disponíveis: ${
+                event.max_players - event.players.length
+              } de ${event.max_players}`}
         </CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="p-6">
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
             <Input
@@ -63,14 +68,18 @@ const PlayerForm: React.FC<PlayerFormProps> = ({ event, onComplete }) => {
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Digite seu nome"
-              className="bg-white/50"
+              className="bg-white/80 border-2 border-fut-200 h-12 text-lg placeholder:text-fut-400"
               disabled={isFull || isSubmitting}
               required
             />
           </div>
           <Button
             type="submit"
-            className="w-full bg-fut-600 hover:bg-fut-700"
+            className={`w-full h-12 text-lg font-medium transition-all duration-200 ${
+              isFull
+                ? "bg-gray-400 hover:bg-gray-500"
+                : "bg-fut-600 hover:bg-fut-700 hover:scale-[1.02] active:scale-[0.98]"
+            }`}
             disabled={isFull || isSubmitting || !name.trim()}
           >
             {isSubmitting
