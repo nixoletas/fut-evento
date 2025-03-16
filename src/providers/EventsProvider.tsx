@@ -13,6 +13,10 @@ interface EventsContextType {
       "id" | "created_by" | "created_at" | "players"
     >
   ) => Promise<FootballEvent>;
+  updateEvent: (
+    eventId: string,
+    eventData: Partial<Pick<FootballEvent, "max_players" | "date">>
+  ) => Promise<void>;
   getEvent: (id: string) => FootballEvent | undefined;
   addPlayerToEvent: (eventId: string, playerName: string) => Promise<void>;
   removePlayerFromEvent: (eventId: string, playerId: string) => Promise<void>;
@@ -333,12 +337,70 @@ export const EventsProvider: React.FC<{ children: React.ReactNode }> = ({
     }
   };
 
+  const updateEvent = async (
+    eventId: string,
+    eventData: Partial<Pick<FootballEvent, "max_players" | "date">>
+  ) => {
+    if (!user) {
+      throw new Error("User must be logged in to update an event");
+    }
+
+    const event = getEvent(eventId);
+    if (!event) {
+      throw new Error("Event not found");
+    }
+
+    // Check if user is the creator
+    if (event.created_by !== user.id) {
+      throw new Error("Only the event creator can update the event");
+    }
+
+    // Prepare update data
+    const updateData: Record<string, any> = {};
+    if (eventData.max_players !== undefined) {
+      // Ensure new max_players is not less than current players
+      if (eventData.max_players < event.players.length) {
+        throw new Error(
+          "Não é possível reduzir o número de vagas abaixo do número de jogadores confirmados"
+        );
+      }
+      updateData.max_players = eventData.max_players;
+    }
+    if (eventData.date !== undefined) {
+      updateData.date = eventData.date.toISOString();
+    }
+
+    // Update event in Supabase
+    const { error } = await supabase
+      .from("events")
+      .update(updateData)
+      .eq("id", eventId);
+
+    if (error) {
+      toast({
+        title: "Erro",
+        description: "Não foi possível atualizar o evento. Tente novamente.",
+        variant: "destructive",
+      });
+      throw error;
+    }
+
+    toast({
+      title: "Evento atualizado",
+      description: "As alterações foram salvas com sucesso.",
+    });
+
+    // Refresh events data
+    await fetchEvents();
+  };
+
   return (
     <EventsContext.Provider
       value={{
         events,
         loading,
         createEvent,
+        updateEvent,
         getEvent,
         addPlayerToEvent,
         removePlayerFromEvent,
