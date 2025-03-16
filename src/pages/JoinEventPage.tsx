@@ -40,8 +40,8 @@ const JoinEventPage: React.FC = () => {
   const metaDescription = `${event.title} - ${eventDate}. ${
     event.players.length
   }/${event.max_players} jogadores confirmados. ${event.description || ""}`;
-  const currentUrl = `${window.location.origin}/join/${event.id}`;
-  const imageUrl = `${window.location.origin}/og-image.png`;
+  const currentUrl = `/join/${event.id}`;
+  const imageUrl = "og-image.png";
 
   return (
     <div className="min-h-screen flex flex-col bg-gradient-to-b from-white to-fut-50">
