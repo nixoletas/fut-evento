@@ -98,7 +98,6 @@ const EventsList: React.FC<EventsListProps> = ({
             <CardDescription className="flex items-center gap-1 text-muted-foreground">
               <Calendar className="h-4 w-4" />
               <span>{formatDate(event.date)}</span>
-              <span>{formatTime(event.date)}</span>
             </CardDescription>
           </CardHeader>
           <CardContent className="pb-4">

@@ -165,7 +165,7 @@ const EventDetails: React.FC<EventDetailsProps> = ({
                   className="max-w-[200px]"
                 />
               ) : (
-                <p className="font-medium">{formatDate(event.date)}</p>
+                <p className="font-small">{formatDate(event.date)}</p>
               )}
             </div>
           </div>
@@ -198,7 +198,6 @@ const EventDetails: React.FC<EventDetailsProps> = ({
                 </div>
               ) : (
                 <div>
-                  <p className="text-sm text-muted-foreground">Horário</p>
                   <p className="font-medium">
                     {formatTime(event.date)} -{" "}
                     {formatTime(
@@ -220,8 +219,11 @@ const EventDetails: React.FC<EventDetailsProps> = ({
           <div className="flex items-center gap-3 p-3 bg-white/50 rounded-lg border border-border">
             <MapPin className="h-5 w-5 text-fut-600" />
             <div>
-              <p className="text-sm text-muted-foreground">Local</p>
-              <p className="font-medium">{event.location}</p>
+              <p className="font-small">
+                {event.location.length > 30
+                  ? `${event.location.slice(0, 30)}...`
+                  : event.location}
+              </p>
             </div>
           </div>
 
