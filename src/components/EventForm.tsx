@@ -164,9 +164,7 @@ const EventForm: React.FC = () => {
               <Input
                 id="duration"
                 type="number"
-                min={30}
                 max={240}
-                step={15}
                 value={duration}
                 onChange={(e) => setDuration(parseInt(e.target.value))}
                 className="bg-white/50"
