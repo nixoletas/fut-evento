@@ -1,4 +1,7 @@
-# Welcome to your Lovable project
+# Welcome to Futevento ⚽
+
+![image](https://github.com/user-attachments/assets/2b8b3c15-3d33-4ced-8ad4-e5cbac1733c2)
+
 
 ## Project info
 
