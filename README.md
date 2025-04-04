@@ -26,6 +26,22 @@ The project was kickstarted using lovable, an AI code generator. Then i added a 
 
 5. The creator of the list can see the list of people who are going and copy the list to clipboard, to paste on whatsApp.
 
+## Setup
+
+For this project to work, you need to create a .env.local file and add the following variables:
+
+```
+VITE_GOOGLE_MAPS_API_KEY=isadjasiod...
+project_id=sdapdoka...
+VITE_SUPABASE_URL=https://xxxxxxxxx.supabase.co
+VITE_SUPABASE_PUBLISHABLE_KEY=dasdsapdka....
+```
+
+You'll need to create a Google Maps API key and activate the Google Maps API.
+You can get the Google Maps API key [here](https://console.cloud.google.com/apis/api/maps_backend/overview?project=amgadiltkvpcjtrbfvhx)
+
+You'll need to create a Supabase project and get the project id and publishable key. You can get the Supabase project id and publishable key [here](https://supabase.com/dashboard/project/amgadiltkvpcjtrbfvhx/settings/api)
+
 ## Run the project:
 
 - Step 1: Clone the repository
