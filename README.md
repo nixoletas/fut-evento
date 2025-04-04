@@ -5,7 +5,7 @@
 
 ## Project info
 
-**URL**: https://lovable.dev/projects/fc719a5c-89d3-498c-a0a0-67e277f77f07
+**URL**: https://futevento.com.br
 
 ## How can I edit this code?
 
