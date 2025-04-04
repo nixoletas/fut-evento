@@ -12,6 +12,9 @@ With the problem of always having to send list after list on whatsApp groups wit
 
 The project was kickstarted using lovable, an AI code generator. Then i added a few features, google Maps API and Supabase Auth.
 
+![image](https://github.com/user-attachments/assets/6f28d2f5-dad1-4aa1-b847-88689e63ef21)
+
+
 ## Run the project:
 
 - Step 1: Clone the repository
