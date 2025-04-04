@@ -7,27 +7,18 @@
 
 **URL**: https://futevento.com.br
 
-## How can I edit this code?
+## How the project was born
 
-There are several ways of editing your application.
+With the problem of always having to send list after list on whatsApp groups with people having to copy the list, add their name and resend it, i came up with the idead of creating a list organizer but aiming towards the soccer theme.
 
-**Use Lovable**
+The project was kickstarted using lovable, an AI code generator. Then i added a few features, google Maps API and Supabase Auth.
+---
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/fc719a5c-89d3-498c-a0a0-67e277f77f07) and start prompting.
-
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
+Run the project:
 
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+# Step 1: Clone the repository
+git clone [futevento](https://github.com/nixoletas/fut-evento.git)
 
 # Step 2: Navigate to the project directory.
 cd <YOUR_PROJECT_NAME>
