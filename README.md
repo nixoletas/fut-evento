@@ -12,6 +12,7 @@
 With the problem of always having to send list after list on whatsApp groups with people having to copy the list, add their name and resend it, i came up with the idead of creating a list organizer but aiming towards the soccer theme.
 
 The project was kickstarted using lovable, an AI code generator. Then i added a few features, google Maps API and Supabase Auth.
+
 ---
 
 Run the project:
