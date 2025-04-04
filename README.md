@@ -30,7 +30,7 @@ The project was kickstarted using lovable, an AI code generator. Then i added a 
 
 For this project to work, you need to create a .env.local file and add the following variables:
 
-```
+```env
 VITE_GOOGLE_MAPS_API_KEY=isadjasiod...
 project_id=sdapdoka...
 VITE_SUPABASE_URL=https://xxxxxxxxx.supabase.co
